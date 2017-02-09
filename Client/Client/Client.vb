@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.Threading
 Imports System.Net.Sockets
+Imports System.Net
 Imports System.IO
 
 Public Class frmClient
@@ -18,13 +19,19 @@ Public Class frmClient
     Private message As String = ""
     Private readThread As Thread
     Dim portNumber As Integer
+    Dim hostName As String
+    Dim hostIPAddr As String
 
     Public Sub New()
         MyBase.New()
 
         InitializeComponent()
 
-       
+        hostName = Dns.GetHostName()
+        hostIPAddr = Dns.GetHostEntry(hostName).AddressList(3).ToString()
+        lblHostIpAddr.Text &= hostIPAddr
+
+
     End Sub
 
     Private Sub FrmClient_Closing(ByVal sender As System.Object,
@@ -66,7 +73,7 @@ Public Class frmClient
             txtDisplay.Text &= "Attempting connection" & vbCrLf
 
             client = New TcpClient()
-            client.Connect("10.19.5.139", portNumber)
+            client.Connect(hostIPAddr, portNumber)
 
             output = client.GetStream()
 
@@ -114,22 +121,23 @@ Public Class frmClient
         Me.btnConnect = New System.Windows.Forms.Button()
         Me.lblPort = New System.Windows.Forms.Label()
         Me.numPort = New System.Windows.Forms.NumericUpDown()
+        Me.lblHostIpAddr = New System.Windows.Forms.Label()
         CType(Me.numPort, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtInput
         '
-        Me.txtInput.Location = New System.Drawing.Point(12, 12)
+        Me.txtInput.Location = New System.Drawing.Point(12, 137)
         Me.txtInput.Name = "txtInput"
-        Me.txtInput.Size = New System.Drawing.Size(296, 20)
+        Me.txtInput.Size = New System.Drawing.Size(392, 20)
         Me.txtInput.TabIndex = 0
         '
         'txtDisplay
         '
-        Me.txtDisplay.Location = New System.Drawing.Point(12, 38)
+        Me.txtDisplay.Location = New System.Drawing.Point(12, 163)
         Me.txtDisplay.Multiline = True
         Me.txtDisplay.Name = "txtDisplay"
-        Me.txtDisplay.Size = New System.Drawing.Size(296, 468)
+        Me.txtDisplay.Size = New System.Drawing.Size(392, 343)
         Me.txtDisplay.TabIndex = 1
         '
         'btnConnect
@@ -160,9 +168,19 @@ Public Class frmClient
         Me.numPort.TabIndex = 4
         Me.numPort.Value = New Decimal(New Integer() {2000, 0, 0, 0})
         '
+        'lblHostIpAddr
+        '
+        Me.lblHostIpAddr.AutoSize = True
+        Me.lblHostIpAddr.Location = New System.Drawing.Point(9, 15)
+        Me.lblHostIpAddr.Name = "lblHostIpAddr"
+        Me.lblHostIpAddr.Size = New System.Drawing.Size(98, 13)
+        Me.lblHostIpAddr.TabIndex = 5
+        Me.lblHostIpAddr.Text = "Your Ip Address is: "
+        '
         'frmClient
         '
         Me.ClientSize = New System.Drawing.Size(419, 518)
+        Me.Controls.Add(Me.lblHostIpAddr)
         Me.Controls.Add(Me.numPort)
         Me.Controls.Add(Me.lblPort)
         Me.Controls.Add(Me.btnConnect)
@@ -186,4 +204,5 @@ Public Class frmClient
         readThread = New Thread(AddressOf RunClient)
         readThread.Start()
     End Sub
+    Friend WithEvents lblHostIpAddr As System.Windows.Forms.Label
 End Class

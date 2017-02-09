@@ -21,13 +21,20 @@ Public Class FrmServer
     Friend WithEvents numPort As System.Windows.Forms.NumericUpDown
     Private reader As BinaryReader
     Dim portNumber As Integer
+    Dim hostName As String
+    Friend WithEvents lblHostIPAddr As System.Windows.Forms.Label
+    Dim hostIpAddr As String
 
     Public Sub New()
         MyBase.New()
 
         InitializeComponent()
 
-       
+        hostName = Dns.GetHostName()
+        hostIPAddr = Dns.GetHostEntry(hostName).AddressList(3).ToString()
+        lblHostIpAddr.Text &= hostIPAddr
+
+
     End Sub
 
     Private Sub btnConnect_Click(sender As Object, e As EventArgs) Handles btnStart.Click
@@ -76,7 +83,7 @@ Public Class FrmServer
 
         Try
 
-            Dim localAddr As IPAddress = IPAddress.Parse("10.19.5.139")
+            Dim localAddr As IPAddress = IPAddress.Parse(hostIpAddr)
             listener = New TcpListener(localAddr, portNumber)
             listener.Start()
 
@@ -142,22 +149,23 @@ Public Class FrmServer
         Me.lblPort = New System.Windows.Forms.Label()
         Me.btnStart = New System.Windows.Forms.Button()
         Me.numPort = New System.Windows.Forms.NumericUpDown()
+        Me.lblHostIPAddr = New System.Windows.Forms.Label()
         CType(Me.numPort, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtInput
         '
-        Me.txtInput.Location = New System.Drawing.Point(12, 12)
+        Me.txtInput.Location = New System.Drawing.Point(12, 108)
         Me.txtInput.Name = "txtInput"
         Me.txtInput.Size = New System.Drawing.Size(366, 20)
         Me.txtInput.TabIndex = 0
         '
         'txtDisplay
         '
-        Me.txtDisplay.Location = New System.Drawing.Point(12, 38)
+        Me.txtDisplay.Location = New System.Drawing.Point(12, 134)
         Me.txtDisplay.Multiline = True
         Me.txtDisplay.Name = "txtDisplay"
-        Me.txtDisplay.Size = New System.Drawing.Size(366, 438)
+        Me.txtDisplay.Size = New System.Drawing.Size(366, 342)
         Me.txtDisplay.TabIndex = 1
         '
         'lblPort
@@ -188,9 +196,19 @@ Public Class FrmServer
         Me.numPort.TabIndex = 5
         Me.numPort.Value = New Decimal(New Integer() {2000, 0, 0, 0})
         '
+        'lblHostIPAddr
+        '
+        Me.lblHostIPAddr.AutoSize = True
+        Me.lblHostIPAddr.Location = New System.Drawing.Point(9, 15)
+        Me.lblHostIPAddr.Name = "lblHostIPAddr"
+        Me.lblHostIPAddr.Size = New System.Drawing.Size(99, 13)
+        Me.lblHostIPAddr.TabIndex = 6
+        Me.lblHostIPAddr.Text = "Your IP Address is: "
+        '
         'FrmServer
         '
         Me.ClientSize = New System.Drawing.Size(480, 488)
+        Me.Controls.Add(Me.lblHostIPAddr)
         Me.Controls.Add(Me.numPort)
         Me.Controls.Add(Me.btnStart)
         Me.Controls.Add(Me.lblPort)
