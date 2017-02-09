@@ -68,7 +68,7 @@ Public Class frmClient
             txtDisplay.Text &= "Attempting connection" & vbCrLf
 
             client = New TcpClient()
-            client.Connect("localhost", 5000)
+            client.Connect("10.19.5.139", 5000)
 
             output = client.GetStream()
 
