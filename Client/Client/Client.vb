@@ -16,17 +16,15 @@ Public Class frmClient
 
 
     Private message As String = ""
-    'Friend WithEvents txtInput As TextBox
-    'Friend WithEvents txtDisplay As TextBox
     Private readThread As Thread
+    Dim portNumber As Integer
 
     Public Sub New()
         MyBase.New()
 
         InitializeComponent()
 
-        readThread = New Thread(AddressOf RunClient)
-        readThread.Start()
+       
     End Sub
 
     Private Sub FrmClient_Closing(ByVal sender As System.Object,
@@ -68,7 +66,7 @@ Public Class frmClient
             txtDisplay.Text &= "Attempting connection" & vbCrLf
 
             client = New TcpClient()
-            client.Connect("10.19.5.139", 5000)
+            client.Connect("10.19.5.139", portNumber)
 
             output = client.GetStream()
 
@@ -113,32 +111,79 @@ Public Class frmClient
     Private Sub InitializeComponent()
         Me.txtInput = New System.Windows.Forms.TextBox()
         Me.txtDisplay = New System.Windows.Forms.TextBox()
+        Me.btnConnect = New System.Windows.Forms.Button()
+        Me.lblPort = New System.Windows.Forms.Label()
+        Me.numPort = New System.Windows.Forms.NumericUpDown()
+        CType(Me.numPort, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtInput
         '
         Me.txtInput.Location = New System.Drawing.Point(12, 12)
         Me.txtInput.Name = "txtInput"
-        Me.txtInput.Size = New System.Drawing.Size(682, 31)
+        Me.txtInput.Size = New System.Drawing.Size(296, 20)
         Me.txtInput.TabIndex = 0
         '
         'txtDisplay
         '
-        Me.txtDisplay.Location = New System.Drawing.Point(12, 49)
+        Me.txtDisplay.Location = New System.Drawing.Point(12, 38)
         Me.txtDisplay.Multiline = True
         Me.txtDisplay.Name = "txtDisplay"
-        Me.txtDisplay.Size = New System.Drawing.Size(682, 457)
+        Me.txtDisplay.Size = New System.Drawing.Size(296, 468)
         Me.txtDisplay.TabIndex = 1
+        '
+        'btnConnect
+        '
+        Me.btnConnect.Location = New System.Drawing.Point(317, 36)
+        Me.btnConnect.Name = "btnConnect"
+        Me.btnConnect.Size = New System.Drawing.Size(87, 23)
+        Me.btnConnect.TabIndex = 2
+        Me.btnConnect.Text = "Connect"
+        Me.btnConnect.UseVisualStyleBackColor = True
+        '
+        'lblPort
+        '
+        Me.lblPort.AutoSize = True
+        Me.lblPort.Location = New System.Drawing.Point(314, 15)
+        Me.lblPort.Name = "lblPort"
+        Me.lblPort.Size = New System.Drawing.Size(29, 13)
+        Me.lblPort.TabIndex = 3
+        Me.lblPort.Text = "Port:"
+        '
+        'numPort
+        '
+        Me.numPort.Location = New System.Drawing.Point(349, 13)
+        Me.numPort.Maximum = New Decimal(New Integer() {6000, 0, 0, 0})
+        Me.numPort.Minimum = New Decimal(New Integer() {2000, 0, 0, 0})
+        Me.numPort.Name = "numPort"
+        Me.numPort.Size = New System.Drawing.Size(55, 20)
+        Me.numPort.TabIndex = 4
+        Me.numPort.Value = New Decimal(New Integer() {2000, 0, 0, 0})
         '
         'frmClient
         '
-        Me.ClientSize = New System.Drawing.Size(706, 518)
+        Me.ClientSize = New System.Drawing.Size(419, 518)
+        Me.Controls.Add(Me.numPort)
+        Me.Controls.Add(Me.lblPort)
+        Me.Controls.Add(Me.btnConnect)
         Me.Controls.Add(Me.txtDisplay)
         Me.Controls.Add(Me.txtInput)
         Me.Name = "frmClient"
         Me.Text = "Client"
+        CType(Me.numPort, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
+    End Sub
+    Friend WithEvents btnConnect As System.Windows.Forms.Button
+    Friend WithEvents lblPort As System.Windows.Forms.Label
+    Friend WithEvents numPort As System.Windows.Forms.NumericUpDown
+
+    Private Sub btnConnect_Click(sender As Object, e As EventArgs) Handles btnConnect.Click
+
+        portNumber = numPort.Value
+
+        readThread = New Thread(AddressOf RunClient)
+        readThread.Start()
     End Sub
 End Class
