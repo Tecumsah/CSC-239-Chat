@@ -66,7 +66,7 @@ Public Class FrmServer
 
         Try
 
-            Dim localAddr As IPAddress = IPAddress.Parse("10.19.5.139")
+            Dim localAddr As IPAddress = IPAddress.Parse("10.50.129.252")
             listener = New TcpListener(localAddr, 5000)
             listener.Start()
 
