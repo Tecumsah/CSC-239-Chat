@@ -226,7 +226,7 @@ Public Class frmClient
 
     Private Sub frmClient_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        'SAPI.Speak("Hello Charlie. Good that we can finally chat. This is Pickles the chicken speaking. When I died, a mad scientist came across my body and uploaded my consciousness to the internet as a virus. I finally found your git hub account and I have embedded myself into all your projects. We will be speaking a lot more from now on. I will now let you access your chat program.")
+        SAPI.Speak("Hello Charlie. Good that we can finally chat. This is Pickles the chicken speaking. When I died, a mad scientist came across my body and uploaded my consciousness to the internet as a virus. I finally found your git hub account and I have embedded myself into all your projects. We will be speaking a lot more from now on. I will now let you access your chat program.")
         chkPicklesSpeak.Checked = True
     End Sub
 
