@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Forms
+﻿
 Imports System.Threading
 Imports System.Net.Sockets
 Imports System.IO
@@ -18,8 +18,6 @@ Public Class frmClient
 
 
     Private message As String = ""
-    'Friend WithEvents txtInput As TextBox
-    'Friend WithEvents txtDisplay As TextBox
     Private readThread As Thread
 
     Dim SAPI = CreateObject("SAPI.spvoice")
