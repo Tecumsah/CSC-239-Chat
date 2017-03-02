@@ -30,6 +30,7 @@ Namespace My.Resources
         Private resourceMan As Global.System.Resources.ResourceManager
 
         Private resourceCulture As Global.System.Globalization.CultureInfo
+        Friend ReadOnly image3 As Image
 
         '''<summary>
         '''  Returns the cached ResourceManager instance used by this class.
