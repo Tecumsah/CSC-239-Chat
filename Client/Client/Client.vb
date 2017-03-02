@@ -127,7 +127,7 @@ Public Class frmClient
         '
         Me.txtInput.Location = New System.Drawing.Point(68, 373)
         Me.txtInput.Name = "txtInput"
-        Me.txtInput.Size = New System.Drawing.Size(505, 20)
+        Me.txtInput.Size = New System.Drawing.Size(505, 31)
         Me.txtInput.TabIndex = 0
         '
         'txtDisplay
@@ -141,6 +141,7 @@ Public Class frmClient
         'picChicken
         '
         Me.picChicken.Image = Global.Client.My.Resources.Resources.image3
+        Me.picChicken.InitialImage = Global.Client.My.Resources.Resources.image3
         Me.picChicken.Location = New System.Drawing.Point(363, -2)
         Me.picChicken.Name = "picChicken"
         Me.picChicken.Size = New System.Drawing.Size(170, 128)
@@ -153,7 +154,7 @@ Public Class frmClient
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(9, 376)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(53, 13)
+        Me.Label1.Size = New System.Drawing.Size(106, 25)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "Message:"
         '
@@ -162,7 +163,7 @@ Public Class frmClient
         Me.chkPicklesSpeak.AutoSize = True
         Me.chkPicklesSpeak.Location = New System.Drawing.Point(513, 89)
         Me.chkPicklesSpeak.Name = "chkPicklesSpeak"
-        Me.chkPicklesSpeak.Size = New System.Drawing.Size(60, 17)
+        Me.chkPicklesSpeak.Size = New System.Drawing.Size(113, 29)
         Me.chkPicklesSpeak.TabIndex = 4
         Me.chkPicklesSpeak.Text = "Pickles"
         Me.chkPicklesSpeak.UseVisualStyleBackColor = True
@@ -172,7 +173,7 @@ Public Class frmClient
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Location = New System.Drawing.Point(12, 30)
         Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(196, 21)
+        Me.ComboBox1.Size = New System.Drawing.Size(196, 33)
         Me.ComboBox1.TabIndex = 5
         '
         'ComboBox2
@@ -180,7 +181,7 @@ Public Class frmClient
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Location = New System.Drawing.Point(12, 73)
         Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(196, 21)
+        Me.ComboBox2.Size = New System.Drawing.Size(196, 33)
         Me.ComboBox2.TabIndex = 6
         '
         'Label2
@@ -188,7 +189,7 @@ Public Class frmClient
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(9, 12)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(55, 13)
+        Me.Label2.Size = New System.Drawing.Size(108, 25)
         Me.Label2.TabIndex = 7
         Me.Label2.Text = "Recipient:"
         '
@@ -197,7 +198,7 @@ Public Class frmClient
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(9, 57)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(61, 13)
+        Me.Label3.Size = New System.Drawing.Size(122, 25)
         Me.Label3.TabIndex = 8
         Me.Label3.Text = "IP Address:"
         '
