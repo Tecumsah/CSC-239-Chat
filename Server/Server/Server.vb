@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Forms
+﻿
 Imports System.Threading
 Imports System.Net.Sockets
 Imports System.Net
@@ -9,6 +9,11 @@ Public Class FrmServer
 
     Friend WithEvents txtInput As TextBox
     Friend WithEvents txtDisplay As TextBox
+    Friend WithEvents lblPort As System.Windows.Forms.Label
+    Friend WithEvents btnStart As System.Windows.Forms.Button
+    Friend WithEvents numPort As System.Windows.Forms.NumericUpDown
+    Friend WithEvents lblHostIPAddr As System.Windows.Forms.Label
+    Friend WithEvents btnStop As Button
 
     Private connection As Socket
     Private readThread As Thread
@@ -16,13 +21,10 @@ Public Class FrmServer
     Private socketStream As NetworkStream
 
     Private writer As BinaryWriter
-    Friend WithEvents lblPort As System.Windows.Forms.Label
-    Friend WithEvents btnStart As System.Windows.Forms.Button
-    Friend WithEvents numPort As System.Windows.Forms.NumericUpDown
     Private reader As BinaryReader
+
     Dim portNumber As Integer
     Dim hostName As String
-    Friend WithEvents lblHostIPAddr As System.Windows.Forms.Label
     Dim hostIpAddr As String
 
     Public Sub New()
@@ -30,19 +32,53 @@ Public Class FrmServer
 
         InitializeComponent()
 
-        hostName = Dns.GetHostName()
-        hostIPAddr = Dns.GetHostEntry(hostName).AddressList(3).ToString()
-        lblHostIpAddr.Text &= hostIPAddr
+        hostIpAddr = LocalIP()
+        lblHostIPAddr.Text &= hostIpAddr
+        readThread = New Thread(AddressOf RunServer)
 
 
     End Sub
 
-    Private Sub btnConnect_Click(sender As Object, e As EventArgs) Handles btnStart.Click
+    Public Function LocalIP() As String
+        ' Obtain the first address of local machine with addressing scheme
+        For Each IP As IPAddress In Dns.GetHostEntry(Dns.GetHostName()).AddressList
+            If IP.AddressFamily.ToString() = "InterNetwork" Then
+                Return (IP.ToString())
+            End If
+        Next IP
+        Return (vbNullString)
+    End Function
 
-        readThread = New Thread(AddressOf RunServer)
+    Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
+
+
         portNumber = numPort.Value
         readThread.Start()
+
+        numPort.Enabled = False
+        btnStart.Enabled = False
+        'btnStart.Visible = False
+        'btnStop.Enabled = True
+        'btnStop.Visible = True
+
     End Sub
+
+    'Private Sub btnStop_Click(sender As Object, e As EventArgs) Handles btnStop.Click
+
+    '    txtDisplay.Text &= vbCrLf & "Terminating connection."
+
+    '    Try
+    '        readThread.Abort()
+
+    '    Catch ex As Exception
+
+    '    End Try
+
+    '    btnStart.Enabled = True
+    '    btnStart.Visible = True
+    '    btnStop.Enabled = False
+    '    btnStop.Visible = False
+    'End Sub
 
     Private Sub frmServer_Closing(
                                    ByVal sender As System.Object,
@@ -138,11 +174,6 @@ Public Class FrmServer
         End Try
     End Sub
 
-    Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
-
-    End Sub
-
-
     Private Sub InitializeComponent()
         Me.txtInput = New System.Windows.Forms.TextBox()
         Me.txtDisplay = New System.Windows.Forms.TextBox()
@@ -150,6 +181,7 @@ Public Class FrmServer
         Me.btnStart = New System.Windows.Forms.Button()
         Me.numPort = New System.Windows.Forms.NumericUpDown()
         Me.lblHostIPAddr = New System.Windows.Forms.Label()
+        Me.btnStop = New System.Windows.Forms.Button()
         CType(Me.numPort, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -205,9 +237,21 @@ Public Class FrmServer
         Me.lblHostIPAddr.TabIndex = 6
         Me.lblHostIPAddr.Text = "Your IP Address is: "
         '
+        'btnStop
+        '
+        Me.btnStop.Enabled = False
+        Me.btnStop.Location = New System.Drawing.Point(384, 39)
+        Me.btnStop.Name = "btnStop"
+        Me.btnStop.Size = New System.Drawing.Size(86, 23)
+        Me.btnStop.TabIndex = 7
+        Me.btnStop.Text = "Stop"
+        Me.btnStop.UseVisualStyleBackColor = True
+        Me.btnStop.Visible = False
+        '
         'FrmServer
         '
         Me.ClientSize = New System.Drawing.Size(480, 488)
+        Me.Controls.Add(Me.btnStop)
         Me.Controls.Add(Me.lblHostIPAddr)
         Me.Controls.Add(Me.numPort)
         Me.Controls.Add(Me.btnStart)
@@ -222,5 +266,5 @@ Public Class FrmServer
 
     End Sub
 
-    
+
 End Class
