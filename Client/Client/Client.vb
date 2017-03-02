@@ -1,8 +1,9 @@
-﻿Imports System.Windows.Forms
+﻿
 Imports System.Threading
 Imports System.Net.Sockets
-Imports System.Net
 Imports System.IO
+
+
 
 Public Class frmClient
     Inherits Form
@@ -18,32 +19,24 @@ Public Class frmClient
 
     Private message As String = ""
     Private readThread As Thread
-    Dim portNumber As Integer
-    Dim hostName As String
-    Dim hostIPAddr As String
+
+    Dim SAPI = CreateObject("SAPI.spvoice")
 
     Public Sub New()
         MyBase.New()
 
         InitializeComponent()
 
-        hostName = Dns.GetHostName()
-        hostIPAddr = Dns.GetHostEntry(hostName).AddressList(3).ToString()
-        lblHostIpAddr.Text &= hostIPAddr
-
-
+        readThread = New Thread(AddressOf RunClient)
+        readThread.Start()
     End Sub
 
-    Private Sub FrmClient_Closing(ByVal sender As System.Object,
-                                  ByVal e As System.ComponentModel.CancelEventArgs) _
-                                Handles MyBase.Closing
+    Private Sub FrmClient_Closing(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
 
         System.Environment.Exit(System.Environment.ExitCode)
     End Sub
 
-    Private Sub txtInput_KeyDown(ByVal sender As System.Object,
-                                   ByVal e As System.Windows.Forms.KeyEventArgs) _
-                                Handles txtInput.KeyDown
+    Private Sub txtInput_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtInput.KeyDown
 
         Try
 
@@ -53,10 +46,12 @@ Public Class frmClient
 
                 txtDisplay.Text &= vbCrLf & "CLIENT>>> " &
                     txtInput.Text
-
+                If chkPicklesSpeak.Checked = True Then
+                    SAPI.Speak("bak gak")
+                    SAPI.Speak(txtInput.Text)
+                End If
                 txtInput.Clear()
             End If
-
         Catch execption As SocketException
 
             txtDisplay.Text &= vbCrLf & "Error writing object"
@@ -73,7 +68,7 @@ Public Class frmClient
             txtDisplay.Text &= "Attempting connection" & vbCrLf
 
             client = New TcpClient()
-            client.Connect(hostIPAddr, portNumber)
+            client.Connect("10.50.129.252", 5000)
 
             output = client.GetStream()
 
@@ -118,91 +113,139 @@ Public Class frmClient
     Private Sub InitializeComponent()
         Me.txtInput = New System.Windows.Forms.TextBox()
         Me.txtDisplay = New System.Windows.Forms.TextBox()
-        Me.btnConnect = New System.Windows.Forms.Button()
-        Me.lblPort = New System.Windows.Forms.Label()
-        Me.numPort = New System.Windows.Forms.NumericUpDown()
-        Me.lblHostIpAddr = New System.Windows.Forms.Label()
-        CType(Me.numPort, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.picChicken = New System.Windows.Forms.PictureBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.chkPicklesSpeak = New System.Windows.Forms.CheckBox()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        CType(Me.picChicken, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtInput
         '
-        Me.txtInput.Location = New System.Drawing.Point(12, 137)
+        Me.txtInput.Location = New System.Drawing.Point(68, 373)
         Me.txtInput.Name = "txtInput"
-        Me.txtInput.Size = New System.Drawing.Size(392, 20)
+        Me.txtInput.Size = New System.Drawing.Size(505, 20)
         Me.txtInput.TabIndex = 0
         '
         'txtDisplay
         '
-        Me.txtDisplay.Location = New System.Drawing.Point(12, 163)
+        Me.txtDisplay.Location = New System.Drawing.Point(12, 112)
         Me.txtDisplay.Multiline = True
         Me.txtDisplay.Name = "txtDisplay"
-        Me.txtDisplay.Size = New System.Drawing.Size(392, 343)
+        Me.txtDisplay.Size = New System.Drawing.Size(561, 245)
         Me.txtDisplay.TabIndex = 1
         '
-        'btnConnect
+        'picChicken
         '
-        Me.btnConnect.Location = New System.Drawing.Point(317, 36)
-        Me.btnConnect.Name = "btnConnect"
-        Me.btnConnect.Size = New System.Drawing.Size(87, 23)
-        Me.btnConnect.TabIndex = 2
-        Me.btnConnect.Text = "Connect"
-        Me.btnConnect.UseVisualStyleBackColor = True
+        Me.picChicken.Image = Global.Client.My.Resources.Resources.image3
+        Me.picChicken.Location = New System.Drawing.Point(363, -2)
+        Me.picChicken.Name = "picChicken"
+        Me.picChicken.Size = New System.Drawing.Size(170, 128)
+        Me.picChicken.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.picChicken.TabIndex = 2
+        Me.picChicken.TabStop = False
         '
-        'lblPort
+        'Label1
         '
-        Me.lblPort.AutoSize = True
-        Me.lblPort.Location = New System.Drawing.Point(314, 15)
-        Me.lblPort.Name = "lblPort"
-        Me.lblPort.Size = New System.Drawing.Size(29, 13)
-        Me.lblPort.TabIndex = 3
-        Me.lblPort.Text = "Port:"
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(9, 376)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(53, 13)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "Message:"
         '
-        'numPort
+        'chkPicklesSpeak
         '
-        Me.numPort.Location = New System.Drawing.Point(349, 13)
-        Me.numPort.Maximum = New Decimal(New Integer() {6000, 0, 0, 0})
-        Me.numPort.Minimum = New Decimal(New Integer() {2000, 0, 0, 0})
-        Me.numPort.Name = "numPort"
-        Me.numPort.Size = New System.Drawing.Size(55, 20)
-        Me.numPort.TabIndex = 4
-        Me.numPort.Value = New Decimal(New Integer() {2000, 0, 0, 0})
+        Me.chkPicklesSpeak.AutoSize = True
+        Me.chkPicklesSpeak.Location = New System.Drawing.Point(513, 89)
+        Me.chkPicklesSpeak.Name = "chkPicklesSpeak"
+        Me.chkPicklesSpeak.Size = New System.Drawing.Size(60, 17)
+        Me.chkPicklesSpeak.TabIndex = 4
+        Me.chkPicklesSpeak.Text = "Pickles"
+        Me.chkPicklesSpeak.UseVisualStyleBackColor = True
         '
-        'lblHostIpAddr
+        'ComboBox1
         '
-        Me.lblHostIpAddr.AutoSize = True
-        Me.lblHostIpAddr.Location = New System.Drawing.Point(9, 15)
-        Me.lblHostIpAddr.Name = "lblHostIpAddr"
-        Me.lblHostIpAddr.Size = New System.Drawing.Size(98, 13)
-        Me.lblHostIpAddr.TabIndex = 5
-        Me.lblHostIpAddr.Text = "Your Ip Address is: "
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(12, 30)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(196, 21)
+        Me.ComboBox1.TabIndex = 5
+        '
+        'ComboBox2
+        '
+        Me.ComboBox2.FormattingEnabled = True
+        Me.ComboBox2.Location = New System.Drawing.Point(12, 73)
+        Me.ComboBox2.Name = "ComboBox2"
+        Me.ComboBox2.Size = New System.Drawing.Size(196, 21)
+        Me.ComboBox2.TabIndex = 6
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(9, 12)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(55, 13)
+        Me.Label2.TabIndex = 7
+        Me.Label2.Text = "Recipient:"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(9, 57)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(61, 13)
+        Me.Label3.TabIndex = 8
+        Me.Label3.Text = "IP Address:"
         '
         'frmClient
         '
-        Me.ClientSize = New System.Drawing.Size(419, 518)
-        Me.Controls.Add(Me.lblHostIpAddr)
-        Me.Controls.Add(Me.numPort)
-        Me.Controls.Add(Me.lblPort)
-        Me.Controls.Add(Me.btnConnect)
+        Me.BackColor = System.Drawing.Color.Beige
+        Me.ClientSize = New System.Drawing.Size(588, 411)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.ComboBox2)
+        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.chkPicklesSpeak)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.txtDisplay)
         Me.Controls.Add(Me.txtInput)
+        Me.Controls.Add(Me.picChicken)
         Me.Name = "frmClient"
         Me.Text = "Client"
-        CType(Me.numPort, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picChicken, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents btnConnect As System.Windows.Forms.Button
-    Friend WithEvents lblPort As System.Windows.Forms.Label
-    Friend WithEvents numPort As System.Windows.Forms.NumericUpDown
 
-    Private Sub btnConnect_Click(sender As Object, e As EventArgs) Handles btnConnect.Click
+    Private Sub frmClient_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        portNumber = numPort.Value
-
-        readThread = New Thread(AddressOf RunClient)
-        readThread.Start()
+        SAPI.Speak("Hello Charlie. Good that we can finally chat. This is Pickles the chicken speaking. When I died, a mad scientist came across my body and uploaded my consciousness to the internet as a virus. I finally found your git hub account and I have embedded myself into all your projects. We will be speaking a lot more from now on. I will now let you access your chat program.")
+        chkPicklesSpeak.Checked = True
     End Sub
-    Friend WithEvents lblHostIpAddr As System.Windows.Forms.Label
+
+    Friend WithEvents picChicken As PictureBox
+
+    Private Sub txtDisplay_TextChanged(sender As Object, e As EventArgs) Handles txtDisplay.TextChanged
+
+    End Sub
+
+    Friend WithEvents Label1 As Label
+    Friend WithEvents chkPicklesSpeak As CheckBox
+    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label3 As Label
+
+    Private Sub chkPicklesSpeak_CheckedChanged(sender As Object, e As EventArgs) Handles chkPicklesSpeak.CheckedChanged
+        If chkPicklesSpeak.Checked = True Then
+            picChicken.Visible = True
+        ElseIf chkPicklesSpeak.Checked = False Then
+            picChicken.Visible = False
+        End If
+    End Sub
 End Class
