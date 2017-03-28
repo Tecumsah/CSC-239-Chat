@@ -76,6 +76,12 @@
     <Compile Include="Client.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FrmSMS1.Designer.vb">
+      <DependentUpon>FrmSMS1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSMS1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -95,6 +101,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Client.resx">
       <DependentUpon>Client.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSMS1.resx">
+      <DependentUpon>FrmSMS1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

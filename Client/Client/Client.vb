@@ -120,6 +120,7 @@ Public Class frmClient
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.BTN_SMS = New System.Windows.Forms.Button()
         CType(Me.picChicken, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -127,7 +128,7 @@ Public Class frmClient
         '
         Me.txtInput.Location = New System.Drawing.Point(68, 373)
         Me.txtInput.Name = "txtInput"
-        Me.txtInput.Size = New System.Drawing.Size(505, 31)
+        Me.txtInput.Size = New System.Drawing.Size(505, 20)
         Me.txtInput.TabIndex = 0
         '
         'txtDisplay
@@ -154,7 +155,7 @@ Public Class frmClient
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(9, 376)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(106, 25)
+        Me.Label1.Size = New System.Drawing.Size(53, 13)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "Message:"
         '
@@ -163,7 +164,7 @@ Public Class frmClient
         Me.chkPicklesSpeak.AutoSize = True
         Me.chkPicklesSpeak.Location = New System.Drawing.Point(513, 89)
         Me.chkPicklesSpeak.Name = "chkPicklesSpeak"
-        Me.chkPicklesSpeak.Size = New System.Drawing.Size(113, 29)
+        Me.chkPicklesSpeak.Size = New System.Drawing.Size(60, 17)
         Me.chkPicklesSpeak.TabIndex = 4
         Me.chkPicklesSpeak.Text = "Pickles"
         Me.chkPicklesSpeak.UseVisualStyleBackColor = True
@@ -173,7 +174,7 @@ Public Class frmClient
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Location = New System.Drawing.Point(12, 30)
         Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(196, 33)
+        Me.ComboBox1.Size = New System.Drawing.Size(196, 21)
         Me.ComboBox1.TabIndex = 5
         '
         'ComboBox2
@@ -181,7 +182,7 @@ Public Class frmClient
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Location = New System.Drawing.Point(12, 73)
         Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(196, 33)
+        Me.ComboBox2.Size = New System.Drawing.Size(196, 21)
         Me.ComboBox2.TabIndex = 6
         '
         'Label2
@@ -189,7 +190,7 @@ Public Class frmClient
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(9, 12)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(108, 25)
+        Me.Label2.Size = New System.Drawing.Size(55, 13)
         Me.Label2.TabIndex = 7
         Me.Label2.Text = "Recipient:"
         '
@@ -198,14 +199,24 @@ Public Class frmClient
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(9, 57)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(122, 25)
+        Me.Label3.Size = New System.Drawing.Size(61, 13)
         Me.Label3.TabIndex = 8
         Me.Label3.Text = "IP Address:"
+        '
+        'BTN_SMS
+        '
+        Me.BTN_SMS.Location = New System.Drawing.Point(267, 33)
+        Me.BTN_SMS.Name = "BTN_SMS"
+        Me.BTN_SMS.Size = New System.Drawing.Size(75, 23)
+        Me.BTN_SMS.TabIndex = 9
+        Me.BTN_SMS.Text = "SMS"
+        Me.BTN_SMS.UseVisualStyleBackColor = True
         '
         'frmClient
         '
         Me.BackColor = System.Drawing.Color.Beige
         Me.ClientSize = New System.Drawing.Size(588, 411)
+        Me.Controls.Add(Me.BTN_SMS)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.ComboBox2)
@@ -225,7 +236,6 @@ Public Class frmClient
 
     Private Sub frmClient_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        SAPI.Speak("Hello Charlie. Good that we can finally chat. This is Pickles the chicken speaking. When I died, a mad scientist came across my body and uploaded my consciousness to the internet as a virus. I finally found your git hub account and I have embedded myself into all your projects. We will be speaking a lot more from now on. I will now let you access your chat program.")
         chkPicklesSpeak.Checked = True
     End Sub
 
@@ -248,5 +258,15 @@ Public Class frmClient
         ElseIf chkPicklesSpeak.Checked = False Then
             picChicken.Visible = False
         End If
+    End Sub
+
+    Friend WithEvents BTN_SMS As Button
+
+    Private Sub BTN_SMS_Click(sender As Object,
+       e As EventArgs) Handles BTN_SMS.Click
+
+        FrmSMS1.Show()
+
+
     End Sub
 End Class

@@ -1,0 +1,12 @@
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\bin\Debug\Client.exe.config
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\bin\Debug\Client.exe
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\bin\Debug\Client.pdb
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\bin\Debug\Client.xml
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\obj\Debug\Client.vbprojResolveAssemblyReference.cache
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\obj\Debug\Client.frmClient.resources
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\obj\Debug\Client.Resources.resources
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\obj\Debug\Client.vbproj.GenerateResource.Cache
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\obj\Debug\Client.exe
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\obj\Debug\Client.xml
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\obj\Debug\Client.pdb
+C:\Users\green\Downloads\CSC-239-Chat-master (3)\Client\Client\obj\Debug\Client.FrmSMS1.resources
